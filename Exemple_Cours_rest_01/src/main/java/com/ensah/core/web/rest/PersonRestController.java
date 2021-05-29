@@ -27,7 +27,7 @@ public class PersonRestController {
 	@Autowired
 	private IPersonService personService;
 
-	@GetMapping("/persons/{idPerson}")
+	@GetMapping("/persons/{idPerson}")	
 	public Person getPersonById(@PathVariable int idPerson) {
 
 		Person p = personService.getPersonById(Long.valueOf(idPerson));
@@ -53,7 +53,11 @@ public class PersonRestController {
 	@PutMapping("/persons")
 	public Person updatePerson(@RequestBody Person person) {
 
-		personService.updatePerson(person);
+		System.out.println("Person First Name "+ person.getFirstName()); 
+		System.out.println("Person Last Name "+ person.getLastName()); 
+
+		
+		//personService.updatePerson(person);
 
 		return person;
 	}

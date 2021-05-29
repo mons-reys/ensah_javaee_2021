@@ -28,6 +28,7 @@ import com.ensah.core.bo.Person;
 import com.ensah.core.bo.Role;
 import com.ensah.core.bo.UserAccount;
 
+
 //Configuration d'une application Spring MVC (@EnableWebMvc)
 //Avec support des transactions (@EnableTransactionManagement)
 

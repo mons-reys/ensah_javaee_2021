@@ -64,10 +64,7 @@ public class Person {
 	@NotBlank(message = "This field is required")
 	private String state;
 
-	@NotEmpty(message = "Choose at least one community")
-	@ElementCollection
-	@OrderColumn(name = "pos")
-	private String[] community;
+
 
 	@NotBlank(message = "This field is required")
 	private String gender;
@@ -76,12 +73,7 @@ public class Person {
 		return idPersonne;
 	}
 
-	@Override
-	public String toString() {
-		return "Person [idPersonne=" + idPersonne + ", nationalIdNumber=" + nationalIdNumber + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", age=" + age + ", email=" + email + ", password=" + password
-				+ ", address=" + address + ", state=" + state + ", community=" + community + ", gender=" + gender + "]";
-	}
+
 
 	public void setIdPersonne(Long idPersonne) {
 		this.idPersonne = idPersonne;
@@ -151,13 +143,6 @@ public class Person {
 		this.state = state;
 	}
 
-	public String[] getCommunity() {
-		return community;
-	}
-
-	public void setCommunity(String[] community) {
-		this.community = community;
-	}
 
 	public String getGender() {
 		return gender;

@@ -25,7 +25,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 import com.ensah.core.bo.Person;
-import com.ensah.core.web.rest.RestApiInterceptor;
 
 
 //Configuration d'une application Spring MVC (@EnableWebMvc)
@@ -156,16 +155,6 @@ public class AppConfig implements WebMvcConfigurer {
 
 	}
 
-	// Configuration d'un intercepteur RestApiInterceptor (C'est juste un exemple
-	// école d'un intercepteur)
-	@Bean
-	RestApiInterceptor demoInterceptor() {
-		return new RestApiInterceptor();
-	}
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(demoInterceptor());
-	}
 
 }
