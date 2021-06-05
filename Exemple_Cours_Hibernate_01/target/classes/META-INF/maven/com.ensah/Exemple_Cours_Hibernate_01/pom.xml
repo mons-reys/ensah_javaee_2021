@@ -7,7 +7,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 
-
 	<properties>
 		<java-version>11</java-version>
 		<hibernate-version>5.4.30.Final</hibernate-version>
