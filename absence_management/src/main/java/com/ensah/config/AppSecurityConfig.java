@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.ensah.core.services.impl.CustomAuthentificationService;
@@ -62,6 +63,11 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter { // Il faut
 
 	}
 
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new CustomAuthenticationFailureHandler();
+	}
+
 	// Configuration de l'algorithme de hashage des mots de passe
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -70,37 +76,37 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter { // Il faut
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
-	
-	
-	
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		//TODO : Configurer la securité de votre application
-		
-		http.authorizeRequests().antMatchers("/student/**").hasRole("STUDENT")  //Le role USER accèdent aux requete commençant par /user/
-		.antMatchers("/cadreadmin/**").hasRole("CADRE_ADMIN") //Le role ADMIN accèdent aux requete commençant par /admin/
-		.antMatchers("/prof/**").hasRole("PROF") //Le role ADMIN accèdent aux requete commençant par /admin/
-		.antMatchers("/admin/**").hasRole("ADMIN") //Le role ADMIN accèdent aux requete commençant par /admin/
+		// TODO : Configurer la securité de votre application
 
-		
-		
-		//TODO : Vous pouvez ajouter les configurations nécessaires si vous avez d'autres rôles
-		.and()
-		
-		.formLogin().loginPage("/showMyLoginPage")  // Indiquer le mapping affichant la page de login Form
-		.loginProcessingUrl("/authenticateTheUser") // Meme valeur à mettre dans l'attribut action dans le form
+		http.authorizeRequests().antMatchers("/student/**").hasRole("STUDENT") // Le role USER accèdent aux requete
+																				// commençant par /user/
+				.antMatchers("/cadreadmin/**").hasRole("CADRE_ADMIN") // Le role ADMIN accèdent aux requete commençant
+																		// par /admin/
+				.antMatchers("/prof/**").hasRole("PROF") // Le role ADMIN accèdent aux requete commençant par /admin/
+				.antMatchers("/admin/**").hasRole("ADMIN") // Le role ADMIN accèdent aux requete commençant par /admin/
+
+				// TODO : Vous pouvez ajouter les configurations nécessaires si vous avez
+				// d'autres rôles
+				.and()
+
+				.formLogin().loginPage("/showMyLoginPage") // Indiquer le mapping affichant la page de login Form
+				.loginProcessingUrl("/authenticateTheUser") // Meme valeur à mettre dans l'attribut action dans le form
 															// de login. Ceci redirigera au bon filtre spring qui
 															// s'occupe de l'authentification
-		.successHandler(authSuccessHandler)
-		.and().logout() //Configurer le logout 
-		
+				.failureHandler(authenticationFailureHandler())
+
+				.successHandler(authSuccessHandler).and().logout() // Configurer le logout
+
 //		.logoutUrl("/perform_logout")   //Nous avons utiliser la valeur par défaut qui est /logout
-		.deleteCookies("JSESSIONID") //  effacer le cookie de session après deconnection
-		.and().csrf().disable()
-		.exceptionHandling().accessDeniedPage("/access-denied") // Indiquer le mapping que Spring utilisera pour
-																		// rediriger à la page d'accès non autorisé
+				.deleteCookies("JSESSIONID") // effacer le cookie de session après deconnection
+				.and().csrf().disable().exceptionHandling().accessDeniedPage("/access-denied") // Indiquer le mapping
+																								// que Spring utilisera
+																								// pour
+																								// rediriger à la page
+																								// d'accès non autorisé
 		;
 
 	}
